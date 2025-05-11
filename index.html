@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: black;
+      }
+      .btn {
+        height: 8vh;
+        width: 8vh;
+        margin: .3em;
+        border:none;
+        border-radius: 50%; 
+        font-size: 1.8em;
+        color:white;
+      }
+      .clr-btn {
+        font-size: 1em;
+      }
+      .color-black {
+        background-color: rgb(50,50,50);
+      }
+
+      .color-orange {
+        background-color: orange;
+      }
+      .show-calculation {
+        color: white;
+        font-size: 3em;
+        margin-left: 2em; 
+      }
+    </style>
+    <!-- Using math.js library to safely evaluate mathematical expressions. -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.11.0/lib/browser/math.min.js"></script>
+
+  </head>
+  <body>
+
+     <p class="js-show-calculation show-calculation"></p>
+    <p>
+      <button class="btn color-black" onclick="
+        updateCalculation('1');
+      ">1</button>
+
+      <button class="btn color-black" onclick="
+        updateCalculation('2');
+      ">2</button>
+
+      <button class="btn color-black" onclick="
+        updateCalculation('3');
+      ">3</button>
+
+      <button class="btn color-orange" onclick="
+        updateCalculation(' + ');
+      ">+</button>
+    </p>
+
+    <p>
+      <button class="btn color-black" onclick="
+        updateCalculation('4');
+      ">4</button>
+
+      <button class="btn color-black" onclick="
+        updateCalculation('5');
+      ">5</button>
+
+      <button class="btn color-black" onclick="
+        updateCalculation('6');
+      ">6</button>
+
+      <button class="btn color-orange" onclick="
+        updateCalculation(' - ');
+      ">-</button>
+    </p>
+
+    <p>
+      <button class="btn color-black" onclick="
+        updateCalculation('7');
+      ">7</button>
+
+      <button class="btn color-black" onclick="
+        updateCalculation('8');
+      ">8</button>
+
+      <button class="btn color-black" onclick="
+        updateCalculation('9');
+      ">9</button>
+
+      <button class="btn color-orange" onclick="
+        updateCalculation(' * ');
+      ">*</button>
+    </p>
+
+    <p>
+      <button class="btn color-black" onclick="
+        updateCalculation('0');
+      ">0</button>
+
+      <button class="btn color-black" onclick="
+        updateCalculation('.');
+      ">.</button>
+
+      <button class="btn color-black" onclick="
+        // Using math.evaluate() from math.js library to evaluate the user's calculation.
+        try {
+          calculation = math.evaluate(calculation).toString();
+        } catch (error) {
+          calculation = 'Error';
+        }
+        
+        showCalculation();
+
+        //Save the calculation.
+        localStorage.setItem('calculation', calculation);
+      ">=</button>
+
+      <button class="btn color-orange" onclick="
+        updateCalculation(' / ');
+      ">/</button>
+    </p>
+
+    <p>
+      <button class="btn color-black clr-btn" onclick="
+        calculation = '';
+        showCalculation();
+
+        // Save the calculation
+        localStorage.setItem('calculation', calculation);
+      ">Clear</button>
+    </p>
+
+    <script>
+       
+      let calculation = localStorage.getItem('calculation') || '';
+      
+      showCalculation();
+
+      function showCalculation() {
+      let paraElement = document.querySelector('.js-show-calculation');
+      paraElement.innerHTML = `${calculation}`;
+      }
+
+      function updateCalculation(value) {
+        calculation += value;
+        showCalculation();
+        localStorage.setItem('calculation', calculation);
+      }
+
+    </script>
+  </body>
+</html>
